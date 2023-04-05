@@ -5,4 +5,5 @@ DSA Templates for
 ==> FENWICK TREES
 ==> TRIES
 ==> UNION FIND
+==> SPARSE TABLE
 etc..
