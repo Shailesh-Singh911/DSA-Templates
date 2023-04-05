@@ -6,7 +6,7 @@ class SegmentTree{
 			seg.resize(4*n);
 		}
 
-		void buildTree(int ind, int low, int high, int[] arr){
+		void buildTree(int ind, int low, int high, int arr[){
 			if(low == high) {
 				seg[ind] = arr[low];
 				return;
@@ -14,8 +14,8 @@ class SegmentTree{
 
 			int mid = (low + high)/2;
 			// 0 based Indexing
-			buildTree(2*ind + 1, low, mid);
-			buildTree(2*ind + 2, mid+1, high);
+			buildTree(2*ind + 1, low, mid, arr);
+			buildTree(2*ind + 2, mid+1, high, arr);
 
 			seg[ind] = min(seg[2*ind + 1], seg[2*ind + 2]);
 		}
