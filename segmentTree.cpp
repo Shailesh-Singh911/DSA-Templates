@@ -1,19 +1,31 @@
+template <typename T>
 class SegTree {
 public:
-    vector <pair<int, int>> tree;
+    vector <T> tree;
 
-    SegTree(int n) {
-        tree.resize(n * 4, {INF, 0});
+    SegTree(int size) {
+        tree.resize(size);
     }
 
-    pair<int, int> func(pair<int, int> a, pair<int, int> b) {
-        if(a.first < b.first) return a;
-        return b;
+    T func(T a, T b) {
+        return a + b; // Segment tree for the sum
+        // return min(a, b); // Segment tree for the minimum
     }
 
-    void update(int node, int start, int end, int pos, int val) {
+    void build(int node, int start, int end, vector <T> &v) {
         if(start == end) {
-            tree[node] = {val, start};
+            tree[node] = v[start];
+        } else {
+            int mid = (start + end)/2;
+            build(2*node, start, mid, v);
+            build(2*node + 1, mid + 1, end, v);
+            tree[node] = func(tree[node*2], tree[node*2 + 1]);
+        }
+    }
+
+    void update(int node, int start, int end, int pos, T val) {
+        if(start == end) {
+            tree[node] = val; // Assign value here.
         } else {
             int mid = (start + end)/2;
             if(pos <= mid) {
@@ -25,9 +37,9 @@ public:
         }
     }
 
-    pair<int, int> query(int node, int start, int end, int l, int r) {
+    T query(int node, int start, int end, int l, int r) {
         if(l > r) {
-            return {INF, 0};
+            return 0; // Return appropriate value, for example INF for minimum.
         }
         if(l == start && r == end) {
             return tree[node];
